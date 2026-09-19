@@ -1,0 +1,68 @@
+/* morepartiesdc.com custom layer v2 · source ~/CC/web-studio/sites/mpdc/media-repo/site/v2/mpdc.css */
+/* MPDC information layer (homepage) + footer identity */
+.mpdc-info{background:#000;color:#fff;padding:72px 24px;font-family:inherit}
+.mpdc-info--alt{background:#0b0b0b;border-top:1px solid #1e1e1e;border-bottom:1px solid #1e1e1e}
+.mpdc-wrap{max-width:1180px;margin:0 auto}
+.mpdc-info h2{font-size:clamp(30px,4.5vw,52px);line-height:1.05;margin:0 0 10px;letter-spacing:-.01em;text-transform:none}
+.mpdc-info .mpdc-sub{color:#b9b9b9;font-size:17px;margin:0 0 34px;max-width:60ch}
+.mpdc-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mpdc-card{border:1px solid #2a2a2a;border-radius:6px;padding:22px 22px 20px;background:#0d0d0d;display:flex;flex-direction:column;gap:12px}
+.mpdc-card h3{margin:0;font-size:22px;letter-spacing:.02em;text-transform:uppercase}
+.mpdc-card .mpdc-day{color:#ff6f6c;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.mpdc-card ul{list-style:none;margin:0;padding:0;color:#d6d6d6;font-size:15px;line-height:1.7}
+.mpdc-card li strong{color:#fff;font-weight:600}
+.mpdc-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:6px}
+.mpdc-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:2px;background:#fff;color:#000!important;font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;font-weight:600}
+.mpdc-btn--ghost{background:transparent;color:#fff!important;border:1px solid #fff}
+.mpdc-btn:hover{opacity:.85}
+.mpdc-link{color:#fff;font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;align-self:center}
+.mpdc-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin:28px 0 26px}
+.mpdc-cols h3{margin:0 0 8px;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#ff6f6c}
+.mpdc-cols p{margin:0;color:#d6d6d6;font-size:15.5px;line-height:1.65}
+.mpdc-fine{color:#8a8a8a;font-size:13px;margin:16px 0 0;max-width:80ch}
+.mpdc-events{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:22px}
+.mpdc-event{border:1px solid #2a2a2a;border-radius:6px;padding:20px;background:#0d0d0d;display:flex;justify-content:space-between;align-items:center;gap:16px;color:#fff;text-decoration:none}
+.mpdc-event b{display:block;font-size:19px;margin-bottom:4px}
+.mpdc-event span{color:#b9b9b9;font-size:14px}
+.mpdc-footer-brand{display:flex;flex-direction:column;gap:6px;color:#fff}
+.mpdc-footer-brand b{letter-spacing:.08em;text-transform:uppercase;font-size:14px}
+.mpdc-footer-brand span,.mpdc-footer-brand a{color:#bdbdbd;font-size:13px;text-decoration:none}
+.mpdc-footer-brand a:hover{color:#fff;text-decoration:underline}
+@media (max-width:860px){.mpdc-cards,.mpdc-cols,.mpdc-events{grid-template-columns:1fr}.mpdc-info{padding:56px 20px}}
+@media (prefers-reduced-motion:no-preference){.mpdc-card{transition:transform .3s ease}.mpdc-card:hover{transform:translateY(-3px)}}
+
+/* ---------- v2: video layer ---------- */
+:root{--mpdc-red:#ff6f6c}
+/* hero: our loop sits on top of the template background; content stays above it */
+.mpdc-hero-media{position:absolute;inset:0;z-index:1;overflow:hidden;background:#000}
+.mpdc-hero-media video,.mpdc-hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mpdc-hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.15) 40%,rgba(0,0,0,.55) 100%)}
+.mpdc-hero-host .section-background>*:not(.mpdc-hero-media){visibility:hidden}
+/* night-card media */
+.mpdc-card{overflow:hidden}
+.mpdc-card-media{position:relative;margin:-22px -22px 6px;aspect-ratio:1/1;max-height:320px;background:#111;overflow:hidden}
+.mpdc-card-media video,.mpdc-card-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mpdc-card-media:after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,#0d0d0d)}
+/* watch the nights */
+.mpdc-reels{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,1fr);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin}
+.mpdc-reel{scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;margin:0}
+.mpdc-reel-frame{position:relative;aspect-ratio:9/16;border-radius:6px;overflow:hidden;background:#111;border:1px solid #2a2a2a}
+.mpdc-reel-frame video,.mpdc-reel-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mpdc-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.6));border:0;cursor:pointer;color:#fff;width:100%;padding:0}
+.mpdc-play span{width:62px;height:62px;border-radius:50%;background:rgba(0,0,0,.55);border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.mpdc-play span:before{content:"";margin-left:5px;border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #fff}
+.mpdc-play:focus-visible{outline:3px solid #fff;outline-offset:-3px}
+.mpdc-reel.is-playing .mpdc-play{display:none}
+.mpdc-reel figcaption{display:flex;flex-direction:column;gap:2px}
+.mpdc-reel figcaption b{font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:#fff}
+.mpdc-reel figcaption span{font-size:13px;color:#a9a9a9}
+.mpdc-reel figcaption a{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#fff;text-decoration:underline;text-underline-offset:4px;margin-top:4px;min-height:32px;display:inline-flex;align-items:center}
+@media (min-width:1100px){.mpdc-reels{grid-auto-flow:row;grid-template-columns:repeat(6,1fr);overflow:visible}}
+@media (max-width:860px){.mpdc-reels{grid-auto-columns:54vw}.mpdc-card-media{aspect-ratio:16/10;max-height:none}}
+@media (prefers-reduced-motion:reduce){.mpdc-card{transition:none}}
+
+/* template header: transparent over the hero, solid once scrolled so logo/nav never sit on top of content */
+#header,.header{transition:background-color .25s ease,backdrop-filter .25s ease,transform .3s ease}
+body.mpdc-hide-header #header,body.mpdc-hide-header header.header{transform:translateY(-100%)}
+@media (prefers-reduced-motion:reduce){#header,.header{transition:none}}
+body.mpdc-scrolled #header,body.mpdc-scrolled header.header{background-color:rgba(0,0,0,.9)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
