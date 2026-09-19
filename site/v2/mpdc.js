@@ -14,14 +14,14 @@
   var io = ("IntersectionObserver" in window) ? new IntersectionObserver(function (es) {
     es.forEach(function (e) {
       var v = e.target;
-      if (e.isIntersecting) { if (v.preload === "none") { v.preload = "auto"; } var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      if (e.isIntersecting) { if (v.dataset.src && !v.src) { v.src = v.dataset.src; } var p = v.play(); if (p && p.catch) p.catch(function () {}); }
       else if (!v.paused) v.pause();
     });
   }, { threshold: 0.25 }) : null;
 
   function loop(src, poster, alt) {
     if (RM || SAVE_DATA || !io) return '<img src="' + poster + '" alt="' + alt + '" loading="lazy" decoding="async">';
-    return '<video class="mpdc-loop" muted loop playsinline preload="none" poster="' + poster + '" aria-label="' + alt + '"><source src="' + src + '" type="video/mp4"></video>';
+    return '<video class="mpdc-loop" muted loop playsinline preload="none" poster="' + poster + '" data-src="' + src + '" aria-label="' + alt + '"></video>';
   }
 
   /* 0) header backing after the first screen of scroll (all pages) */
