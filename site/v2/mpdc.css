@@ -66,3 +66,6 @@
 body.mpdc-hide-header #header,body.mpdc-hide-header header.header{transform:translateY(-100%)}
 @media (prefers-reduced-motion:reduce){#header,.header{transition:none}}
 body.mpdc-scrolled #header,body.mpdc-scrolled header.header{background-color:rgba(0,0,0,.9)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+
+/* hero fills the first screen so the info layer inserts below the fold (no layout shift) */
+main section.page-section:first-of-type{min-height:100vh;min-height:100svh}
