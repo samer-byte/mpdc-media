@@ -69,3 +69,10 @@ body.mpdc-scrolled #header,body.mpdc-scrolled header.header{background-color:rgb
 
 /* hero fills the first screen so the info layer inserts below the fold (no layout shift) */
 main section.page-section:first-of-type{min-height:100vh;min-height:100svh}
+
+/* v2.1 (9/22): reels — playing video above poster; poster hidden while playing */
+.mpdc-reel-frame video{z-index:2;background:#000}
+.mpdc-reel.is-playing .mpdc-reel-frame img{visibility:hidden}
+.mpdc-reel.is-playing .mpdc-play{display:none}
+/* night-card media: same wide frame for all three so the horizontal Friday reel shows full width */
+.mpdc-card-media{aspect-ratio:16/10;max-height:none}

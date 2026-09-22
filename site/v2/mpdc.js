@@ -2,7 +2,7 @@
    Loaded from Squarespace Code Injection (footer). Everything degrades to the plain template if this fails. */
 (function () {
   "use strict";
-  var M = "https://samer-byte.github.io/mpdc-media/v1/";
+  var M = "https://samer-byte.github.io/mpdc-media/v2/";
   var SMS = "sms:+14436739234?&body=" + encodeURIComponent("Hi — table for ___ people on ___ (Fri/Sat/Sun). Name: ___");
   var RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var MOBILE = window.matchMedia && matchMedia("(max-width: 767px)").matches;
@@ -63,13 +63,13 @@
 
   /* 3) Information layer */
   var nights = [
-    { day: "Friday", name: "Rosebar Fridays", media: loop(M + "card-rosebar-fridays.mp4", M + "card-rosebar-fridays.webp", "Rosebar Fridays, one night from 11:58pm to 2:38am"),
+    { day: "Friday", name: "Rosebar Fridays", media: loop(M + "card-rosebar-fridays.mp4", M + "card-rosebar-fridays.webp", "Rosebar Fridays — bottles, sparklers and the crowd"),
       lines: '<li><strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW</li><li>Doors <strong>10pm</strong> · 21+</li><li><strong>Free before 11pm</strong> with RSVP</li><li>Tables from <strong>$1K</strong> · $250 / $500 deposits</li><li>Hip-hop + Top 100 · fashionable attire</li>',
       actions: '<a class="mpdc-btn" href="https://posh.vip/g/more-parties-dc">RSVP free</a><a class="mpdc-btn mpdc-btn--ghost" href="https://posh.vip/e/rosebar-table-deposits">Reserve a table</a><a class="mpdc-link" href="/rosebar-fri">Friday details</a>' },
     { day: "Saturday", name: "SAX Saturdays", media: loop(M + "card-sax-saturdays.mp4", M + "card-sax-saturdays.webp", "SAX Saturdays fire performers"),
       lines: '<li><strong>SAX</strong> · 734 11th St NW</li><li>Doors <strong>11pm</strong> · 21+</li><li>Free RSVP on Posh</li><li>Tables from <strong>$1.5K</strong></li><li>Hip-hop + Top 100 · fashionable attire</li>',
       actions: '<a class="mpdc-btn" href="https://posh.vip/g/more-parties-dc">RSVP free</a><a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text for a table</a><a class="mpdc-link" href="/sax-sat">Saturday details</a>' },
-    { day: "Sunday", name: "Rosebar Sundays", media: '<img src="' + M + 'card-rosebar-sundays.webp" alt="Rosebar Sundays" loading="lazy" decoding="async">',
+    { day: "Sunday", name: "Rosebar Sundays", media: loop(M + "card-rosebar-sundays.mp4", M + "card-rosebar-sundays.webp", "Rosebar Sundays — the Rosebar sign and bottle parade"),
       lines: '<li><strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW</li><li>Doors <strong>11pm</strong> · 21+</li><li>#SundayService · free RSVP on Posh</li><li>Tables from <strong>$1K</strong></li><li>Hip-hop + Top 100</li>',
       actions: '<a class="mpdc-btn" href="https://posh.vip/g/more-parties-dc">RSVP free</a><a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text for a table</a><a class="mpdc-link" href="/rosebar-sundays">Sunday details</a>' }
   ];
@@ -90,14 +90,11 @@
   }).join("");
 
   /* specials hide themselves the morning after they end (ends = local date string) */
-  var specials = [
-    { ends: "2026-09-21", url: "https://posh.vip/e/soul-district-dc-the-bullpen-", name: "Soul District DC @ The Bullpen ☀️", when: "Sunday, September 20 · 3pm · day party", cta: "Soul District tickets →" },
-    { ends: "2026-11-01", url: "https://posh.vip/e/the-ojyssey-ojlajuices-official-birthday-celebration", name: "The OJyssey", when: "Friday, October 31 · OJ La Juice&#39;s official birthday celebration", cta: "OJyssey tickets →" }
-  ];
+  var specials = [];  /* add {ends,url,name,when,cta} to show a special; section hides when empty (OJ 9/22) */
   var today = new Date(); today.setHours(0, 0, 0, 0);
   var upcoming = specials.filter(function (e) { return new Date(e.ends + "T00:00:00") > today; }).map(function (e) {
     return '<a class="mpdc-event" href="' + e.url + '"><div><b>' + e.name + '</b><span>' + e.when + '</span></div><span>' + e.cta + '</span></a>';
-  }).join("") || '<p class="mpdc-sub">New specials drop on Instagram first — follow @morepartiesdc.</p>';
+  }).join("");
 
   var html = ''
     + '<section class="mpdc-info" id="this-weekend" aria-labelledby="mpdc-h1"><div class="mpdc-wrap">'
@@ -114,12 +111,18 @@
     + '<div class="mpdc-actions"><a class="mpdc-btn" href="' + SMS + '">Text (443) 673-9234 to book</a><a class="mpdc-btn mpdc-btn--ghost" href="/table-reservation">Table reservations</a></div>'
     + '<p class="mpdc-fine">Deposits are non-refundable. All nights 21+. Fashionable attire — no slides or athletic wear.</p>'
     + '</div></section>'
-    + '<section class="mpdc-info mpdc-info--alt" id="coming-up" aria-labelledby="mpdc-h3"><div class="mpdc-wrap">'
+    + (upcoming ? '<section class="mpdc-info mpdc-info--alt" id="coming-up" aria-labelledby="mpdc-h3"><div class="mpdc-wrap">'
     + '<h2 id="mpdc-h3">Coming up.</h2><p class="mpdc-sub">Specials on top of the weekly nights.</p>'
     + '<div class="mpdc-events">' + upcoming + '</div>'
     + '<div class="mpdc-actions"><a class="mpdc-btn mpdc-btn--ghost" href="https://posh.vip/g/more-parties-dc">All events on Posh</a></div>'
-    + '</div></section>';
+    + '</div></section>' : '');
   hero.after(el(html));
+
+  /* template "SPECIAL EVENTS" poster section: hidden (it shows a passed flyer; specials now live in Coming up) */
+  document.querySelectorAll("main section.page-section").forEach(function (sec) {
+    var hd = sec.querySelector("h1,h2,h3");
+    if (hd && /^\s*special events\s*$/i.test(hd.textContent)) sec.style.display = "none";
+  });
 
   /* card loops: play only on screen */
   if (io) document.querySelectorAll(".mpdc-loop").forEach(function (v) { io.observe(v); });
@@ -137,7 +140,7 @@
         v.poster = M + r.file + ".webp"; v.src = M + r.file + ".mp4";
         v.setAttribute("aria-label", r.title + " — " + r.sub);
         v.addEventListener("ended", function () { fig.classList.remove("is-playing"); });
-        frame.insertBefore(v, frame.firstChild);
+        frame.appendChild(v);
       }
       fig.classList.add("is-playing"); active = fig;
       var p = v.play(); if (p && p.catch) p.catch(function () {}); v.focus();
