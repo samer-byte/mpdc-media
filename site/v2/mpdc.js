@@ -3,7 +3,7 @@
 (function () {
   "use strict";
   var M = "https://samer-byte.github.io/mpdc-media/v2/";
-  var SMS = "sms:+14436739234?&body=" + encodeURIComponent("Hi — table for ___ people on ___ (Fri/Sat/Sun). Name: ___");
+  var SMS = "sms:+12028127900?&body=" + encodeURIComponent("Hi — table for ___ people on ___ (Fri/Sat/Sun). Name: ___");
   var RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var MOBILE = window.matchMedia && matchMedia("(max-width: 767px)").matches;
   var SAVE_DATA = navigator.connection && navigator.connection.saveData;
@@ -37,7 +37,7 @@
   document.querySelectorAll("footer *").forEach(function (n) {
     if (n.children.length === 0 && n.textContent.trim() === "Site Title" && !n.closest(".mpdc-footer-brand")) {
       var d = document.createElement("div"); d.className = "mpdc-footer-brand";
-      d.innerHTML = '<b>More Parties DC</b><span>For sections DM <a href="https://instagram.com/morepartiesdc">@morepartiesdc</a> · <a href="' + SMS + '">(443) 673-9234</a> · <a href="mailto:morepartiesdc@gmail.com">morepartiesdc@gmail.com</a></span><span>Washington, DC · <a href="https://posh.vip/g/more-parties-dc">Events &amp; tables on Posh</a></span>';
+      d.innerHTML = '<b>More Parties DC</b><span>For sections DM <a href="https://instagram.com/morepartiesdc">@morepartiesdc</a> · <a href="' + SMS + '">(202) 812-7900</a> · <a href="mailto:morepartiesdc@gmail.com">morepartiesdc@gmail.com</a></span><span>Washington, DC · <a href="https://posh.vip/g/more-parties-dc">Events &amp; tables on Posh</a></span>';
       (n.closest("p,h1,h2,h3,div") || n).replaceWith(d);
     }
   });
@@ -104,15 +104,15 @@
   var INTRO = {
     fri: { day: "Every Friday", h1: "Rosebar Fridays at Rosebar Lounge, DC",
       p: "Friday nights at Rosebar Lounge, 1215 Connecticut Ave NW near Dupont Circle. Doors open at 10pm, entry is free before 11pm with an RSVP (capacity permitting), and it's 21+. Hip-hop and Top 100 all night — fashionable attire.",
-      facts: ["Doors 10pm · 21+", "Free before 11pm with RSVP", "Tables from $500 · $250 deposit, $500 when the minimum is $1,500+", "Deposits are non-refundable and go toward your minimum", "Arrive by 12:30am or the table can be released", "32% service fee and tax on the final bill"],
+      facts: ["Doors 10pm · 21+", "Free before 11pm with RSVP", "Tables from $500 · $250 deposit, $500 when the minimum is $1,500+", "Deposits are non-refundable and go toward your minimum", "Arrive by 12:30am or the table can be released", "32% service fee and tax on the final bill", "Extra guests $40 each"],
       table: '<a class="mpdc-btn mpdc-btn--ghost" href="https://posh.vip/e/rosebar-table-deposits">Reserve a table</a>' },
     sat: { day: "Every Saturday", h1: "SAX Saturdays at SAX, Downtown DC",
-      p: "Saturday nights at SAX, 734 11th St NW in downtown DC. Doors at 11pm, 21+, with a free RSVP on Posh. Hip-hop and Top 100 — fashionable attire.",
-      facts: ["Doors 11pm · 21+", "Free RSVP on Posh", "Tables from $500", "Arrive by 12:30am or the table can be released", "32% service fee and tax on the final bill", "Deposits are non-refundable"],
+      p: "Saturday nights at SAX, 734 11th St NW in downtown DC. Doors at 11pm (earlier on holidays and hosted nights), 21+, and entry is free before midnight with an RSVP. Hip-hop and Top 100 — fashionable attire.",
+      facts: ["Doors 11pm · 21+ (earlier on holidays and hosted nights)", "Free before midnight with RSVP", "Tables from $500", "Arrive by 12:30am or the table can be released", "32% service fee and tax on the final bill", "Deposits are non-refundable", "Extra guests $40 each"],
       table: '<a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text for a table</a>' },
     sun: { day: "Every Sunday", h1: "Rosebar Sundays (#SundayService), DC",
-      p: "Sunday nights at Rosebar Lounge, 1215 Connecticut Ave NW. Doors at 11pm, 21+, with a free RSVP on Posh. Hip-hop and Top 100.",
-      facts: ["Doors 11pm · 21+", "Free RSVP on Posh", "Tables from $500", "Deposits are non-refundable"],
+      p: "Sunday nights at Rosebar Lounge, 1215 Connecticut Ave NW. Doors at 11pm, 21+, and entry is free before midnight with an RSVP. Hip-hop and Top 100.",
+      facts: ["Doors 11pm · 21+", "Free before midnight with RSVP", "Tables from $500", "Deposits are non-refundable"],
       table: '<a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text for a table</a>' }
   };
   (function nightPage() {
@@ -168,10 +168,10 @@
       lines: '<li><strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW</li><li>Doors <strong>10pm</strong> · 21+</li><li><strong>Free before 11pm</strong> with RSVP</li><li>Tables from <strong>$500</strong> · $250 / $500 deposits</li><li>Hip-hop + Top 100 · fashionable attire</li>',
       actions: '<a class="mpdc-btn" href="' + nextNight("fri").url + '">RSVP free</a><a class="mpdc-btn mpdc-btn--ghost" href="https://posh.vip/e/rosebar-table-deposits">Reserve a table</a><a class="mpdc-link" href="/rosebar-fri">Friday details</a>' },
     { day: "Saturday", name: "SAX Saturdays", media: loop(M + "card-sax-saturdays.mp4", M + "card-sax-saturdays.webp", "SAX Saturdays fire performers"),
-      lines: '<li><strong>SAX</strong> · 734 11th St NW</li><li>Doors <strong>11pm</strong> · 21+</li><li>Free RSVP on Posh</li><li>Tables from <strong>$500</strong></li><li>Hip-hop + Top 100 · fashionable attire</li>',
+      lines: '<li><strong>SAX</strong> · 734 11th St NW</li><li>Doors <strong>11pm</strong> · 21+</li><li><strong>Free before midnight</strong> with RSVP</li><li>Tables from <strong>$500</strong></li><li>Hip-hop + Top 100 · fashionable attire</li>',
       actions: '<a class="mpdc-btn" href="' + nextNight("sat").url + '">RSVP free</a><a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text for a table</a><a class="mpdc-link" href="/sax-sat">Saturday details</a>' },
     { day: "Sunday", name: "Rosebar Sundays", media: loop(M + "card-rosebar-sundays.mp4", M + "card-rosebar-sundays.webp", "Rosebar Sundays — the Rosebar sign and bottle parade"),
-      lines: '<li><strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW</li><li>Doors <strong>11pm</strong> · 21+</li><li>#SundayService · free RSVP on Posh</li><li>Tables from <strong>$500</strong></li><li>Hip-hop + Top 100</li>',
+      lines: '<li><strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW</li><li>Doors <strong>11pm</strong> · 21+</li><li>#SundayService · <strong>free before midnight</strong> with RSVP</li><li>Tables from <strong>$500</strong></li><li>Hip-hop + Top 100</li>',
       actions: '<a class="mpdc-btn" href="' + nextNight("sun").url + '">RSVP free</a><a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text for a table</a><a class="mpdc-link" href="/rosebar-sundays">Sunday details</a>' }
   ];
   var cards = nights.map(function (n) {
@@ -213,7 +213,7 @@
     + '<div class="mpdc-cols"><div><h3>How it works</h3><p>Pick your night, reserve with a deposit, and it is applied in full to your minimum. You get a confirmation text with your table and arrival time.</p></div>'
     + '<div><h3>What it costs</h3><p>Tables start at $500 every night; premium sections run higher. Friday deposits are $250, or $500 when the minimum is $1,500 or more, on Posh. A 32% service fee and tax is added to the final bill.</p></div>'
     + '<div><h3>Arrive on time</h3><p>Tables not claimed by 12:30am can be released. Prices change on celebrity-host nights — the confirmation text is the final word.</p></div></div>'
-    + '<div class="mpdc-actions"><a class="mpdc-btn" href="' + SMS + '">Text (443) 673-9234 to book</a><a class="mpdc-btn mpdc-btn--ghost" href="/table-reservation">Table reservations</a></div>'
+    + '<div class="mpdc-actions"><a class="mpdc-btn" href="' + SMS + '">Text (202) 812-7900 to book</a><a class="mpdc-btn mpdc-btn--ghost" href="/table-reservation">Table reservations</a></div>'
     + '<p class="mpdc-fine">Deposits are non-refundable. All nights 21+. Fashionable attire — no slides or athletic wear.</p>'
     + '</div></section>'
     + (upcoming ? '<section class="mpdc-info mpdc-info--alt" id="coming-up" aria-labelledby="mpdc-h3"><div class="mpdc-wrap">'
