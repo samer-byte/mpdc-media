@@ -76,3 +76,12 @@ main section.page-section:first-of-type{min-height:100vh;min-height:100svh}
 .mpdc-reel.is-playing .mpdc-play{display:none}
 /* night-card media: same wide frame for all three so the horizontal Friday reel shows full width */
 .mpdc-card-media{aspect-ratio:16/10;max-height:none}
+
+/* 9/25: night-page intro + this-week notes */
+.mpdc-note{display:inline-block;margin:6px 0 10px;padding:6px 12px;border-radius:999px;background:#d4a64a;color:#111;font-weight:700;font-size:13px;letter-spacing:.02em}
+#mpdc-night-intro h1{font-size:clamp(30px,5vw,54px);line-height:1.02;margin:6px 0 12px;letter-spacing:-.01em}
+.mpdc-facts{list-style:none;padding:0;margin:14px 0 18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.mpdc-facts li{padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:15px}
+@media (max-width:640px){.mpdc-facts{grid-template-columns:1fr}}
+#mpdc-night-intro .mpdc-day{color:#ff6f6c;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.mpdc-info h1.mpdc-h1{font-size:clamp(30px,4.5vw,52px);line-height:1.05;margin:0 0 10px;letter-spacing:-.01em;text-transform:none;color:#fff}
