@@ -85,3 +85,20 @@ main section.page-section:first-of-type{min-height:100vh;min-height:100svh}
 @media (max-width:640px){.mpdc-facts{grid-template-columns:1fr}}
 #mpdc-night-intro .mpdc-day{color:#ff6f6c;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
 .mpdc-info h1.mpdc-h1{font-size:clamp(30px,4.5vw,52px);line-height:1.05;margin:0 0 10px;letter-spacing:-.01em;text-transform:none;color:#fff}
+
+/* 9/30: Last weekend recaps */
+.mpdc-recap{margin:0 0 46px}
+.mpdc-recap-head h3{font-size:clamp(24px,3vw,34px);margin:6px 0 6px;line-height:1.1}
+.mpdc-recap-head p{color:#b9b9b9;margin:0 0 18px}
+.mpdc-recap-head .mpdc-day{color:#ff6f6c;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.mpdc-recap-body{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;align-items:start}
+.mpdc-recap-clip{margin:0}
+.mpdc-recap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mpdc-recap-ph{display:block;border-radius:10px;overflow:hidden;background:#111;aspect-ratio:2/3}
+.mpdc-recap-ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.mpdc-recap-ph:hover img{transform:scale(1.04)}
+.mpdc-lightbox{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:24px}
+.mpdc-lightbox.open{display:flex}
+.mpdc-lightbox img{max-width:100%;max-height:90vh;border-radius:8px}
+.mpdc-lb-x{position:absolute;top:14px;right:18px;background:none;border:0;color:#fff;font-size:40px;line-height:1;cursor:pointer;min-width:44px;min-height:44px}
+@media (max-width:760px){.mpdc-recap-body{grid-template-columns:1fr}.mpdc-recap-clip{max-width:320px}}

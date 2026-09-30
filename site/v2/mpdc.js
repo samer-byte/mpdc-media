@@ -201,10 +201,37 @@
     return '<a class="mpdc-event" href="' + e.url + '"><div><b>' + e.name + '</b><span>' + e.when + '</span></div><span>' + e.cta + '</span></a>';
   }).join("");
 
+  /* recaps: the latest weekend's photos + clip from Liphe (watermarked set). Newest first; each hides itself after `until`. */
+  var R = M + "recap/";
+  var recaps = [
+    { until: "2026-10-25", id: "sax-0926", night: "SAX Saturdays", date: "Saturday, Sept 26", title: "G Herbo in the building.",
+      line: "SAX Saturdays hosted by PARTYNEXTDOOR, with G Herbo pulling up.",
+      clip: { src: R + "2026-09-26/herbo-clip.mp4", poster: R + "2026-09-26/herbo-clip.webp", label: "G Herbo at SAX Saturdays, Sept 26" },
+      photos: [["herbo-ball", "G Herbo with a basketball at SAX Saturdays"], ["herbo-mic", "G Herbo on the mic at SAX"], ["herbo-crew", "G Herbo and friends at SAX"],
+               ["herbo-laugh", "G Herbo laughing with a friend at SAX"], ["sax-crowd-pink", "Guests celebrating at SAX Saturdays"], ["sax-crowd", "The crowd at SAX Saturdays"]] },
+    { until: "2026-10-25", id: "rose-0925", night: "Rosebar Fridays", date: "Friday, Sept 25", title: "Rosebar Fridays, Sept 25.",
+      line: "Photos and video from Friday night at Rosebar Lounge.",
+      clip: { src: R + "2026-09-26/rose-clip.mp4", poster: R + "2026-09-26/rose-clip.webp", label: "Rosebar Fridays, Sept 25" },
+      photos: [["rose-dj", "The DJ booth at Rosebar Fridays"], ["rose-red", "A guest dancing under red lights at Rosebar"], ["rose-wall", "Guests at the rose wall"],
+               ["rose-hands", "Hands up at the rose wall"], ["rose-neon", "Rosebar's neon signs"], ["rose-crowd", "The crowd at Rosebar Fridays"]] }
+  ];
+  var liveRecaps = recaps.filter(function (r) { return new Date(r.until + "T00:00:00") > today; });
+  var recapHtml = liveRecaps.map(function (r) {
+    var dir = R + "2026-09-26/";
+    return '<article class="mpdc-recap" id="recap-' + r.id + '"><div class="mpdc-recap-head"><span class="mpdc-day">' + r.night + ' · ' + r.date + '</span><h3>' + r.title + '</h3><p>' + r.line + '</p></div>'
+      + '<div class="mpdc-recap-body"><figure class="mpdc-reel mpdc-recap-clip" data-src="' + r.clip.src + '" data-poster="' + r.clip.poster + '" data-label="' + r.clip.label + '"><div class="mpdc-reel-frame"><img src="' + r.clip.poster + '" alt="' + r.clip.label + '" loading="lazy" decoding="async"><button class="mpdc-play" type="button" aria-label="Play ' + r.clip.label + '"><span></span></button></div></figure>'
+      + '<div class="mpdc-recap-grid">' + r.photos.map(function (ph) {
+          return '<a href="' + dir + ph[0] + '.webp" class="mpdc-recap-ph" data-full="' + dir + ph[0] + '.webp"><img src="' + dir + ph[0] + '-sm.webp" alt="' + ph[1] + '" loading="lazy" decoding="async" width="520" height="780"></a>';
+        }).join("") + '</div></div></article>';
+  }).join("");
+
   var html = ''
     + '<section class="mpdc-info" id="this-weekend" aria-labelledby="mpdc-h1"><div class="mpdc-wrap">'
     + '<h1 id="mpdc-h1" class="mpdc-h1">DC nightlife, every weekend.</h1><p class="mpdc-sub">Rosebar Fridays, SAX Saturdays and Rosebar Sundays — three rooms, three nights, one crew. RSVP is free; tables hold with a deposit.</p>'
     + '<div class="mpdc-cards">' + cards + '</div></div></section>'
+    + (recapHtml ? '<section class="mpdc-info mpdc-info--alt" id="last-weekend" aria-labelledby="mpdc-hlw"><div class="mpdc-wrap">'
+    + '<h2 id="mpdc-hlw">Last weekend.</h2><p class="mpdc-sub">Straight from our photographer — tap a clip to play, tap a photo to open it.</p>'
+    + recapHtml + '</div></section>' : '')
     + '<section class="mpdc-info mpdc-info--alt" id="watch" aria-labelledby="mpdc-hw"><div class="mpdc-wrap">'
     + '<h2 id="mpdc-hw">Watch the nights.</h2><p class="mpdc-sub">Real rooms, real crowds — shot on the night by our team. Tap to play with sound.</p>'
     + '<div class="mpdc-reels">' + reelHtml + '</div></div></section>'
@@ -231,6 +258,36 @@
 
   /* card loops: play only on screen */
   if (io) document.querySelectorAll(".mpdc-loop").forEach(function (v) { io.observe(v); });
+
+  /* recap clips: same tap-to-play pattern as reels */
+  document.querySelectorAll(".mpdc-recap-clip").forEach(function (fig) {
+    fig.querySelector(".mpdc-play").addEventListener("click", function () {
+      var frame = fig.querySelector(".mpdc-reel-frame"), v = frame.querySelector("video");
+      if (!v) {
+        v = document.createElement("video"); v.setAttribute("playsinline", ""); v.controls = true; v.preload = "auto";
+        v.poster = fig.dataset.poster; v.src = fig.dataset.src; v.setAttribute("aria-label", fig.dataset.label);
+        v.addEventListener("ended", function () { fig.classList.remove("is-playing"); });
+        frame.appendChild(v);
+      }
+      fig.classList.add("is-playing"); var p = v.play(); if (p && p.catch) p.catch(function () {}); v.focus();
+    });
+  });
+  /* recap photos: simple lightbox (Esc / click to close); falls back to opening the image */
+  var lb = null;
+  document.querySelectorAll(".mpdc-recap-ph").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (!lb) {
+        lb = document.createElement("div"); lb.className = "mpdc-lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
+        lb.innerHTML = '<button type="button" class="mpdc-lb-x" aria-label="Close">×</button><img alt="">';
+        document.body.appendChild(lb);
+        lb.addEventListener("click", function (ev) { if (ev.target === lb || ev.target.classList.contains("mpdc-lb-x")) lb.classList.remove("open"); });
+        document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") lb.classList.remove("open"); });
+      }
+      var img = lb.querySelector("img"); img.src = a.dataset.full; img.alt = a.querySelector("img").alt;
+      lb.classList.add("open"); lb.querySelector(".mpdc-lb-x").focus();
+    });
+  });
 
   /* reels: tap to play with sound, one at a time */
   var active = null;
