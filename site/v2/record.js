@@ -26,7 +26,7 @@
             return '<li><b>' + esc(e.name) + '</b><span>' + esc(e.role) + ' · ' + esc(e.night) + (e.night.indexOf(e.venue) < 0 ? ' · ' + esc(e.venue) : '') + '</span><time>' + when(e.date) + '</time></li>';
           }).join("") + '</ul>' : '');
       }).join("")
-      + '<div class="mpdc-rec-cta"><h2>Be in the room for the next one.</h2><p class="mpdc-sub">RSVP is free. Tables hold with a deposit.</p>'
+      + '<div class="mpdc-rec-cta"><h2>This weekend.</h2><p class="mpdc-sub">RSVP is free. Tables hold with a deposit.</p>'
       + '<div class="mpdc-actions">' + X.nights.map(function (n) { var nx = X.nextNight(n.key); return '<a class="mpdc-btn' + (n.key === "fri" ? "" : " mpdc-btn--ghost") + '" href="' + nx.url + '">' + n.name + (nx.date ? " · " + X.fmtDate(nx.date, { month: "short", day: "numeric" }) : "") + '</a>'; }).join("")
       + '<a class="mpdc-link" href="/table-reservation">Pick a table</a></div></div>';
     host.innerHTML = html;

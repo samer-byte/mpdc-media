@@ -58,7 +58,7 @@
         + '<div class="mpdc-actions"><a class="mpdc-btn" href="' + X.sms(body) + '">Text for table ' + esc(t.n) + '</a>'
         + (posh ? '<a class="mpdc-btn mpdc-btn--ghost" href="' + posh + '">Pay the deposit on Posh</a>' : '')
         + (c.nx ? '<a class="mpdc-link" href="' + X.appNight(S.night, c.nx.date) + '">Request it in the app</a>' : '') + '</div>'
-        + '<p class="mpdc-fine">We confirm by text. Minimums can change for special events and guest hosts — the confirmation text is the final word.</p></div>';
+        + '<p class="mpdc-fine">We confirm by text. Minimums can change for special events and guest hosts.</p></div>';
     }
     /* phones: the detail card sits below the map, so a bar pinned to the bottom of the screen carries the price and the action */
     function mini(c) {
