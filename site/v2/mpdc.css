@@ -251,3 +251,13 @@ html.mpdc-lock{overflow:hidden}
 body.mpdc-scrolled .header-title-logo img,body.mpdc-scrolled .header-mobile-logo img{max-height:54px!important}
 body.mpdc-scrolled .header-inner{padding-top:10px!important;padding-bottom:10px!important}
 @media (max-width:860px){.mpdc-fl-map{margin:0 -12px;width:calc(100% + 24px)}}
+
+/* no layout shift: on pages where the layer inserts a first section (tables, the three nights, The Record) a blank first
+   screen holds the template's sections below the fold until mpdc.js puts ours there. It must be a pseudo-element in the
+   sections' own parent: a margin collapses through the parents and a border moves the section itself, and both count as
+   shifts. If the script never arrives the hold lets go after 5s. */
+#collection-621eeeeb58390943bc278be1 main :has(> section.page-section):before,#collection-624dcca99d2c284615b7b23b main :has(> section.page-section):before,#collection-624dd17a4302e763c9053bee main :has(> section.page-section):before,#collection-625f6a5374b33c4a960d2110 main :has(> section.page-section):before,#collection-6261e8879b40575cab591310 main :has(> section.page-section):before{content:"";display:block;height:100vh;background:#000;animation:mpdc-hold-off 0s 5s forwards}
+body.mpdc-ready main :has(> section.page-section):before{display:none!important}
+@keyframes mpdc-hold-off{to{height:0}}
+.mpdc-floor-host{min-height:900px}.mpdc-record-host{min-height:100vh}
+@media (min-width:861px){.mpdc-floor-host{min-height:780px}}
