@@ -261,3 +261,7 @@ body.mpdc-ready main :has(> section.page-section):before{display:none!important}
 @keyframes mpdc-hold-off{to{height:0}}
 .mpdc-floor-host{min-height:900px}.mpdc-record-host{min-height:100vh}
 @media (min-width:861px){.mpdc-floor-host{min-height:780px}}
+
+/* 10/7: the Recent visits page shows only our section. The page's old template gallery (SAX Wednesdays photos and flyers
+   from years back) is hidden; the team flagged it in the chat on 10/6. */
+#collection-6261e8879b40575cab591310 main section.page-section:not(.mpdc-info){display:none!important}
