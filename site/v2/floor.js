@@ -46,8 +46,12 @@
       var when = c.nx ? X.fmtDate(c.nx.date) : "";
       var body = "Hi — I'd like table " + t.n + " at " + c.n.name + (when ? " on " + when : "") + ". Group of ___. Name: ___";
       var sun = S.night === "sun", cabinSun = sun && t.floor === "Inside Cabin";   /* Sunday terms are the venue's to confirm: quote only the chart */
-      var posh = sun ? null : (c.nx && c.nx.deposit) || c.room.deposit;
-      var dep = sun ? "Held with a deposit · non-refundable · goes toward your minimum" : (t.min >= 1500 ? "$500" : "$250") + " deposit · non-refundable · goes toward your minimum";
+      /* OJ rule (10/6): on holidays and hosted nights the table is held by a SECTION FEE. It is not a deposit and does not
+         count toward the minimum. The regular deposit page is never offered on those nights; only that night's own fee page. */
+      var special = c.holiday || !!(c.nx && (c.nx.title || c.nx.host));
+      var posh = sun ? null : special ? (c.nx && c.nx.deposit) || null : c.room.deposit;
+      var dep = special ? (c.nx && c.nx.fee ? c.nx.fee + " · " : "A section fee holds the table on this night · ") + "it does not count toward your minimum"
+        : sun ? "Held with a deposit · non-refundable · goes toward your minimum" : (t.min >= 1500 ? "$500" : "$250") + " deposit · non-refundable · goes toward your minimum";
       var extra = t.pit ? c.rules.extraPit : c.rules.extra;
       return '<div class="mpdc-fd" id="mpdc-fd"><span class="mpdc-day">' + esc(c.n.name) + (when ? " · " + when : "") + (c.holiday ? " · holiday pricing" : "") + '</span>'
         + '<h3>Table ' + esc(t.n) + '</h3><p class="mpdc-fd-where">' + esc(where(t)) + '</p>'
@@ -56,7 +60,7 @@
         + (dep ? '<li>' + dep + '</li>' : '') + (sun ? '<li>Service fee, tax and arrival time come with your confirmation text</li>' : '') + (c.rules.arrive && !sun ? '<li>Arrive by ' + esc(c.rules.arrive.replace(" AM", "am")) + ' or the table can be released</li>' : '')
         + (c.rules.service && !sun ? '<li>' + c.rules.service + '% service fee and tax on the final bill</li>' : '') + '</ul>'
         + '<div class="mpdc-actions"><a class="mpdc-btn" href="' + X.sms(body) + '">Text for table ' + esc(t.n) + '</a>'
-        + (posh ? '<a class="mpdc-btn mpdc-btn--ghost" href="' + posh + '">Pay the deposit on Posh</a>' : '')
+        + (posh ? '<a class="mpdc-btn mpdc-btn--ghost" href="' + posh + '">' + (special ? 'Pay the section fee on Posh' : 'Pay the deposit on Posh') + '</a>' : '')
         + (c.nx ? '<a class="mpdc-link" href="' + X.appNight(S.night, c.nx.date) + '">Request it in the app</a>' : '') + '</div>'
         + '<p class="mpdc-fine">We confirm by text. Minimums can change for special events and guest hosts.</p></div>';
     }
