@@ -222,6 +222,22 @@
   var path = location.pathname.replace(/\/$/, "") || "/";
   var isHome = document.body.classList.contains("homepage") || path === "/" || path === "/home";
 
+  /* 0a) Search hygiene the editor has not done yet. (1) The 26 copies Squarespace made on 9/11 ("/home-1", "/careers-2" …) and
+         the pre-July venue pages are still in the sitemap and indexable: mark them noindex here so Google keeps one of each.
+         (2) The template's Organization data still carries the old (443) line: publish Dave's line instead.
+         Both belong in the Squarespace editor; this holds until someone deletes the pages there. */
+  (function hygiene() {
+    try {
+      var dup = /^\/(home|table-reservation|weekly-line-up|event-photos|aboutus-link|contact-us|careers|special-events|rose-fri-photos|sax-sat-photos|rose-sun-photos)-\d$/;
+      var stale = /^\/(saint-thurs|zebbies-thursdays|saint-nye|abi-fri-photos|saint-sat-photos|park-sundays-photos|sunday-funday|arcadia-bowling|saint-celebs|abigail-celebs|club-photos|hiring|celebritypics)$/;
+      var pth = location.pathname.replace(/\/$/, "");
+      if (dup.test(pth) || stale.test(pth)) { var mr = document.createElement("meta"); mr.name = "robots"; mr.content = "noindex"; document.head.appendChild(mr); }
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(function (sc) {
+        if (sc.id !== "mpdc-events-ld" && /443-?673-?9234/.test(sc.textContent)) sc.textContent = sc.textContent.replace(/\+?1?-?443-673-9234/g, "+1-202-812-7900");
+      });
+    } catch (e) {}
+  })();
+
   /* 0) header backing after the first screen of scroll (all pages) */
   var lastY = window.scrollY;
   var onScroll = function () {
