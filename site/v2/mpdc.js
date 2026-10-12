@@ -57,7 +57,7 @@
   function upcoming(key, n, now) {
     var from = nightToday(now), rows = (FEED.nights || {})[key] || {};
     return Object.keys(rows).sort().filter(function (d) { return d >= from && closed.indexOf(d) < 0; }).slice(0, n || 1).map(function (d) {
-      return { key: key, date: d, url: "https://posh.vip/e/" + rows[d].posh, title: rows[d].title || null, host: (FEED.hosts || {})[d] || null, holiday: holidays.indexOf(d) >= 0, fee: (DATES[d] && DATES[d].fee) || null, entry: (DATES[d] && DATES[d].entry) || null, price: (DATES[d] && DATES[d].price != null) ? DATES[d].price : null, deposit: (DATES[d] && DATES[d].deposit) || null };
+      return { key: key, date: d, url: "https://posh.vip/e/" + rows[d].posh + "?t=website", title: rows[d].title || null, host: (FEED.hosts || {})[d] || null, holiday: holidays.indexOf(d) >= 0, fee: (DATES[d] && DATES[d].fee) || null, entry: (DATES[d] && DATES[d].entry) || null, price: (DATES[d] && DATES[d].price != null) ? DATES[d].price : null, deposit: (DATES[d] && DATES[d].deposit) ? DATES[d].deposit + "?t=website" : null };
     });
   }
   function nextNight(key, now) { return upcoming(key, 1, now)[0] || { key: key, date: null, url: GROUP, title: null, host: null, holiday: false }; }
@@ -225,16 +225,10 @@
   var path = location.pathname.replace(/\/$/, "") || "/";
   var isHome = document.body.classList.contains("homepage") || path === "/" || path === "/home";
 
-  /* 0a) Search hygiene the editor has not done yet. (1) The 26 copies Squarespace made on 9/11 ("/home-1", "/careers-2" …) and
-         the pre-July venue pages are still in the sitemap and indexable: mark them noindex here so Google keeps one of each.
-         (2) The template's Organization data still carries the old (443) line: publish Dave's line instead.
-         Both belong in the Squarespace editor; this holds until someone deletes the pages there. */
+  /* 0a) The template's Organization data still carries the old (443) line: publish Dave's line instead.
+         Belongs in the Squarespace editor; this holds until it is fixed there. */
   (function hygiene() {
     try {
-      var dup = /^\/(home|table-reservation|weekly-line-up|event-photos|aboutus-link|contact-us|careers|special-events|rose-fri-photos|sax-sat-photos|rose-sun-photos)-\d$/;
-      var stale = /^\/(saint-thurs|zebbies-thursdays|saint-nye|abi-fri-photos|saint-sat-photos|park-sundays-photos|sunday-funday|arcadia-bowling|saint-celebs|abigail-celebs|club-photos|hiring|celebritypics)$/;
-      var pth = location.pathname.replace(/\/$/, "");
-      if (dup.test(pth) || stale.test(pth)) { var mr = document.createElement("meta"); mr.name = "robots"; mr.content = "noindex"; document.head.appendChild(mr); }
       document.querySelectorAll('script[type="application/ld+json"]').forEach(function (sc) {
         if (sc.id !== "mpdc-events-ld" && /443-?673-?9234/.test(sc.textContent)) sc.textContent = sc.textContent.replace(/\+?1?-?443-673-9234/g, "+1-202-812-7900");
       });
@@ -285,8 +279,8 @@
           /* an offer is only published with a real price: 0 on free-RSVP nights, the Posh general-admission price when the feed
              carries one. A night with no known price publishes no offer (Google flags an offer that has no price). */
           var ev = out[out.length - 1];
-          if (freeOn(nx)) ev.offers = { "@type": "Offer", "url": nx.url, "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "name": "Free RSVP" };
-          else if (nx.price != null) ev.offers = { "@type": "Offer", "url": nx.url, "price": String(nx.price), "priceCurrency": "USD", "availability": "https://schema.org/InStock", "name": "General admission" };
+          if (freeOn(nx)) ev.offers = { "@type": "Offer", "url": nx.url.split("?")[0], "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "name": "Free RSVP" };
+          else if (nx.price != null) ev.offers = { "@type": "Offer", "url": nx.url.split("?")[0], "price": String(nx.price), "priceCurrency": "USD", "availability": "https://schema.org/InStock", "name": "General admission" };
         });
       });
       var sc = document.createElement("script"); sc.type = "application/ld+json"; sc.id = "mpdc-events-ld"; sc.text = JSON.stringify(out);
