@@ -265,3 +265,19 @@ body.mpdc-ready main :has(> section.page-section):before{display:none!important}
 /* 10/7: the Recent visits page shows only our section. The page's old template gallery (SAX Wednesdays photos and flyers
    from years back) is hidden; the team flagged it in the chat on 10/6. */
 #collection-6261e8879b40575cab591310 main section.page-section:not(.mpdc-info){display:none!important}
+
+/* floor map: reserved tables, "we pick", and the three-step request (10/13) */
+.mpdc-fl-t.is-taken{color:#8a8a8a}.mpdc-fl-t.is-taken span{text-decoration:line-through}
+.mpdc-fd-count{margin:8px 0 0;color:#b9b9b9;font-size:15px}.mpdc-fd-count b{color:#fff}
+.mpdc-fl-any{display:block;width:100%;margin:12px 0 0;min-height:48px;padding:0 16px;background:#111;color:#fff;border:1px solid #3a3a3a;border-radius:4px;font:inherit;font-size:15px;cursor:pointer;text-align:center}
+.mpdc-fl-any[aria-pressed=true]{border-color:#fff;background:#1a1a1a}.mpdc-fl-any:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.mpdc-steps{list-style:none;counter-reset:st;margin:0 0 14px;padding:0}
+.mpdc-steps>li{counter-increment:st;position:relative;padding:14px 0 14px 38px;border-top:1px solid #1f1f1f}
+.mpdc-steps>li:before{content:counter(st);position:absolute;left:0;top:13px;width:24px;height:24px;border-radius:50%;border:1px solid #5a5a5a;color:#fff;font-size:13px;line-height:22px;text-align:center}
+.mpdc-steps>li>b{display:block;color:#fff;font-size:16px;margin-bottom:8px}.mpdc-steps p{margin:0 0 10px;color:#b9b9b9;font-size:15px;line-height:1.45}
+.mpdc-steps .mpdc-actions{margin:0}
+.mpdc-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mpdc-form .mpdc-ff:nth-child(3){grid-column:1/-1}
+.mpdc-ff{display:block}.mpdc-ff span{display:block;color:#b9b9b9;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.mpdc-ff input,.mpdc-ff select{width:100%;min-height:46px;padding:0 12px;background:#111;color:#fff;border:1px solid #3a3a3a;border-radius:2px;font:inherit;font-size:16px;box-sizing:border-box}
+.mpdc-ff input:focus-visible,.mpdc-ff select:focus-visible{outline:2px solid #fff;outline-offset:1px}
+@media (max-width:420px){.mpdc-form{grid-template-columns:1fr}}
