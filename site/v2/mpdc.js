@@ -17,7 +17,10 @@
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content; }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function sms(body) { return "sms:" + PHONE + "?&body=" + encodeURIComponent(body); }
+  /* where the visitor came from: links we hand out end ?src=<label> (ig, linktree, ads, text …). It rides in the text message
+     ("Ref: ig.") so whoever answers can see which channel sent the table, and on the pixel's Lead event. */
+  var SRC = (function () { try { var m = /[?&](?:src|utm_source)=([a-z0-9_-]{1,24})(?:&|$)/i.exec(location.search); if (m) sessionStorage.setItem("mpdc_src", m[1].toLowerCase()); return sessionStorage.getItem("mpdc_src") || ""; } catch (e) { return ""; } })();
+  function sms(body) { return "sms:" + PHONE + "?&body=" + encodeURIComponent(body + (SRC ? " Ref: " + SRC + "." : "")); }
   var SMS = sms("Hi — table for ___ people on ___ (Fri/Sat/Sun). Name: ___");
   function money(n) { return "$" + Number(n).toLocaleString("en-US"); }
 
@@ -214,7 +217,7 @@
         else if (/posh\.vip\/e\/[^?#]*(deposit|section-fee)/.test(h)) { kind = "table"; how = "posh deposit"; }
         else if (/app\.morepartiesdc\.com/.test(h) && a.closest(".mpdc-fd")) { kind = "table"; how = "app"; }
         else if (/posh\.vip\/(e|g)\//.test(h)) { kind = "rsvp"; how = "posh"; }
-        if (kind) window.fbq("track", "Lead", { content_name: kind, content_category: how });
+        if (kind) window.fbq("track", "Lead", SRC ? { content_name: kind, content_category: how, source: SRC } : { content_name: kind, content_category: how });
       }, true);
     } catch (e) {}
   })();
