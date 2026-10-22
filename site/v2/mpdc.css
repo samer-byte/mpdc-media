@@ -281,3 +281,21 @@ body.mpdc-ready main :has(> section.page-section):before{display:none!important}
 .mpdc-ff input,.mpdc-ff select{width:100%;min-height:46px;padding:0 12px;background:#111;color:#fff;border:1px solid #3a3a3a;border-radius:2px;font:inherit;font-size:16px;box-sizing:border-box}
 .mpdc-ff input:focus-visible,.mpdc-ff select:focus-visible{outline:2px solid #fff;outline-offset:1px}
 @media (max-width:420px){.mpdc-form{grid-template-columns:1fr}}
+
+/* 21+ age gate */
+#mpdc-age{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.94);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.mpdc-age-box{width:100%;max-width:440px;background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:32px 28px;color:#fff;font-family:inherit;text-align:left}
+.mpdc-age-mark{display:block;letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:#ff6f6c;margin:0 0 14px}
+.mpdc-age-box h2{margin:0 0 8px;font-size:30px;line-height:1.15;color:#fff}
+.mpdc-age-box p{margin:0 0 18px;color:#cfcfcf;font-size:15px;line-height:1.5}
+.mpdc-age-dob{display:grid;grid-template-columns:1.6fr 1fr 1.2fr;gap:8px;margin:0 0 6px}
+.mpdc-age-dob label span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.mpdc-age-dob select{width:100%;min-height:48px;background:#000;color:#fff;border:1px solid #3a3a3a;border-radius:6px;padding:0 10px;font:inherit;font-size:16px}
+.mpdc-age-dob select:focus-visible,.mpdc-age-box button:focus-visible,.mpdc-age-box a:focus-visible{outline:2px solid #ff6f6c;outline-offset:2px}
+.mpdc-age-err{min-height:20px;color:#ff8f8c!important;font-size:14px!important;margin:6px 0 10px!important}
+.mpdc-age-box button{width:100%;min-height:48px;cursor:pointer}
+.mpdc-age-fine{margin:16px 0 0!important;font-size:13px!important;color:#8a8a8a!important}
+.mpdc-age-fine a{color:#bdbdbd}
+.mpdc-optin{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;color:#cfcfcf;font-size:13px;line-height:1.45;cursor:pointer}
+.mpdc-optin input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:#ff6f6c}
+.mpdc-optin a{color:#fff}

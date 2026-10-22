@@ -52,14 +52,16 @@
     function pkgLine(c) { var p = c.pkgs[+S.pkg - 1]; return p ? " Birthday package: " + money(p.price) + " (" + p.guests + " guests, " + p.includes + ")." : ""; }
     function msg(c, t) {
       var when = c.nx ? X.fmtDate(c.nx.date) : "";
-      return "Hi — I'd like " + (t ? "table " + t.n : "a table, any open one,") + " at " + c.n.name + (when ? " on " + when : "") + ". Group of " + (S.size || "___") + ". Name: " + (S.name || "___") + "." + pkgLine(c);
+      return "Hi — I'd like " + (t ? "table " + t.n : "a table, any open one,") + " at " + c.n.name + (when ? " on " + when : "") + ". Group of " + (S.size || "___") + ". Name: " + (S.name || "___") + "." + pkgLine(c) + (S.optin ? " OK to text me about this booking." : "");
     }
     function form(c) {
       var sizes = ""; for (var i = 2; i <= 20; i++) sizes += '<option value="' + i + '"' + (String(i) === S.size ? " selected" : "") + '>' + i + '</option>';
       var pk = c.pkgs.length ? '<label class="mpdc-ff"><span>Birthday package</span><select data-f="pkg" aria-label="Birthday package"><option value="">No package</option>' + c.pkgs.map(function (p, k) {
         return '<option value="' + (k + 1) + '"' + (String(k + 1) === S.pkg ? " selected" : "") + '>' + money(p.price) + ' · ' + p.guests + ' guests · ' + esc(p.includes) + '</option>'; }).join("") + '</select></label>' : "";
       return '<div class="mpdc-form"><label class="mpdc-ff"><span>Name</span><input type="text" data-f="name" autocomplete="name" maxlength="60" value="' + esc(S.name) + '"></label>'
-        + '<label class="mpdc-ff"><span>Group size</span><select data-f="size" aria-label="Group size"><option value="">Select</option>' + sizes + '<option value="20+"' + (S.size === "20+" ? " selected" : "") + '>More than 20</option></select></label>' + pk + '</div>';
+        + '<label class="mpdc-ff"><span>Group size</span><select data-f="size" aria-label="Group size"><option value="">Select</option>' + sizes + '<option value="20+"' + (S.size === "20+" ? " selected" : "") + '>More than 20</option></select></label>' + pk
+        /* texting opt-in (carrier requirement, 10/22): unchecked by default, never required to book */
+        + '<label class="mpdc-optin"><input type="checkbox" data-f="optin"' + (S.optin ? " checked" : "") + '><span>Text me about my table booking. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a></span></label></div>';
     }
     function detail(c) {
       var any = S.sel === "any", t = any ? null : c.tables.filter(function (x) { return x.n === S.sel; })[0];
@@ -149,7 +151,7 @@
     /* the details fields rewrite the text message in place: no redraw, so the keyboard and focus stay put */
     function sync(e) {
       var f = e.target.dataset && e.target.dataset.f; if (!f) return false;
-      S[f] = String(e.target.value || "").replace(/[<>]/g, "").slice(0, 60);
+      S[f] = e.target.type === "checkbox" ? (e.target.checked ? "1" : "") : String(e.target.value || "").replace(/[<>]/g, "").slice(0, 60);
       var c = ctx(), t = S.sel === "any" ? null : c.tables.filter(function (x) { return x.n === S.sel; })[0], href = X.sms(msg(c, t));
       ui.querySelectorAll("a[data-sms]").forEach(function (a) { a.href = href; });
       return true;
