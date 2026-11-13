@@ -61,7 +61,7 @@
       return '<div class="mpdc-form"><label class="mpdc-ff"><span>Name</span><input type="text" data-f="name" autocomplete="name" maxlength="60" value="' + esc(S.name) + '"></label>'
         + '<label class="mpdc-ff"><span>Group size</span><select data-f="size" aria-label="Group size"><option value="">Select</option>' + sizes + '<option value="20+"' + (S.size === "20+" ? " selected" : "") + '>More than 20</option></select></label>' + pk
         /* texting opt-in (carrier requirement, 10/22): unchecked by default, never required to book */
-        + '<label class="mpdc-optin"><input type="checkbox" data-f="optin"' + (S.optin ? " checked" : "") + '><span>I agree to receive table booking SMS messages from More Parties DC. Message and data rates may apply. Message frequency varies. Reply STOP to unsubscribe or HELP for help. Privacy Policy: <a href="https://morepartiesdc.com/privacy-policy">https://morepartiesdc.com/privacy-policy</a>. Terms: <a href="https://morepartiesdc.com/terms">https://morepartiesdc.com/terms</a>.</span></label></div>';
+        + '<label class="mpdc-optin"><input type="checkbox" data-f="optin"' + (S.optin ? " checked" : "") + '><span>I agree to receive table booking SMS messages from More Parties DC. Message and data rates may apply. Message frequency varies. Reply STOP to unsubscribe or HELP for help. Privacy Policy: <a href="https://app.morepartiesdc.com/privacy.html">https://app.morepartiesdc.com/privacy.html</a>. Terms: <a href="https://app.morepartiesdc.com/terms.html">https://app.morepartiesdc.com/terms.html</a>.</span></label></div>';
     }
     function detail(c) {
       var any = S.sel === "any", t = any ? null : c.tables.filter(function (x) { return x.n === S.sel; })[0];

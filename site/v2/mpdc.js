@@ -19,7 +19,7 @@
     + '<label><span>Year</span><select name="y" required><option value="">Year</option>' + opt(yr, yr - 100) + '</select></label></div>'
     + '<p class="mpdc-age-err" role="alert" aria-live="assertive"></p>'
     + '<button type="submit" class="mpdc-btn">Enter</button>'
-    + '<p class="mpdc-age-fine">Your date of birth is not stored. <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a></p></form>';
+    + '<p class="mpdc-age-fine">Your date of birth is not stored. <a href="https://app.morepartiesdc.com/privacy.html">Privacy</a> · <a href="https://app.morepartiesdc.com/terms.html">Terms</a></p></form>';
   var html = document.documentElement; html.classList.add("mpdc-lock"); document.body.appendChild(g);
   var f = g.querySelector("form"), err = g.querySelector(".mpdc-age-err"), first = f.querySelector("select");
   setTimeout(function () { first.focus(); }, 0);
@@ -294,7 +294,7 @@
   document.querySelectorAll("footer *").forEach(function (n) {
     if (n.children.length === 0 && n.textContent.trim() === "Site Title" && !n.closest(".mpdc-footer-brand")) {
       var d = document.createElement("div"); d.className = "mpdc-footer-brand";
-      d.innerHTML = '<b>More Parties DC</b><span>For sections DM <a href="https://instagram.com/morepartiesdc">@morepartiesdc</a> · <a href="' + SMS + '">' + PHONE_TXT + '</a> · <a href="mailto:morepartiesdc@gmail.com">morepartiesdc@gmail.com</a></span><span>Book a table by phone, any hour: <a href="tel:' + LINE + '">' + LINE_TXT + '</a></span><span>Washington, DC · <a href="' + GROUP + '">Events &amp; tables on Posh</a> · <a href="/table-reservation">Floor maps</a> · <a href="/sax-celebs">Recent visits</a> · <a href="' + APP_WEB + '">The app</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a></span><span>21+ only. Msg &amp; data rates may apply to texts; reply STOP to opt out.</span>';
+      d.innerHTML = '<b>More Parties DC</b><span>For sections DM <a href="https://instagram.com/morepartiesdc">@morepartiesdc</a> · <a href="' + SMS + '">' + PHONE_TXT + '</a> · <a href="mailto:morepartiesdc@gmail.com">morepartiesdc@gmail.com</a></span><span>Book a table by phone, any hour: <a href="tel:' + LINE + '">' + LINE_TXT + '</a></span><span>Washington, DC · <a href="' + GROUP + '">Events &amp; tables on Posh</a> · <a href="/table-reservation">Floor maps</a> · <a href="/sax-celebs">Recent visits</a> · <a href="' + APP_WEB + '">The app</a> · <a href="https://app.morepartiesdc.com/privacy.html">Privacy</a> · <a href="https://app.morepartiesdc.com/terms.html">Terms</a></span><span>21+ only. Msg &amp; data rates may apply to texts; reply STOP to opt out.</span>';
       (n.closest("p,h1,h2,h3,div") || n).replaceWith(d);
     }
   });
