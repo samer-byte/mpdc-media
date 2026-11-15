@@ -9,6 +9,7 @@
   var KEY = "mpdc21", DAY = 864e5;
   try { var v = JSON.parse(localStorage.getItem(KEY) || "null"); if (v && v.ok && Date.now() - v.at < 30 * DAY) return; } catch (e) {}
   if (document.getElementById("mpdc-age")) return;
+  var NO = false; try { NO = sessionStorage.getItem("mpdc21no") === "1"; } catch (e) {}
   var now = new Date(), yr = now.getFullYear(), opt = function (a, b, lab) { var o = ""; for (var i = a; a < b ? i <= b : i >= b; a < b ? i++ : i--) o += '<option value="' + i + '">' + (lab ? lab[i - 1] : i) + '</option>'; return o; };
   var MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   var g = document.createElement("div"); g.id = "mpdc-age"; g.setAttribute("role", "dialog"); g.setAttribute("aria-modal", "true"); g.setAttribute("aria-labelledby", "mpdc-age-h");
@@ -20,8 +21,13 @@
     + '<p class="mpdc-age-err" role="alert" aria-live="assertive"></p>'
     + '<button type="submit" class="mpdc-btn">Enter</button>'
     + '<p class="mpdc-age-fine">Your date of birth is not stored. <a href="https://app.morepartiesdc.com/privacy.html">Privacy</a> · <a href="https://app.morepartiesdc.com/terms.html">Terms</a></p></form>';
-  var html = document.documentElement; html.classList.add("mpdc-lock"); document.body.appendChild(g);
+  var REFUSED = '<b class="mpdc-age-mark">More Parties DC</b><h2 id="mpdc-age-h" tabindex="-1">Sorry, you must be 21 or older.</h2><p>Our events are 21+.</p>';
+  var html = document.documentElement; html.classList.add("mpdc-lock");
+  /* everything behind the gate is out of reach of the keyboard and screen readers until it is passed */
+  var held = []; Array.prototype.forEach.call(document.body.children, function (c) { if (!/^(SCRIPT|STYLE|LINK)$/.test(c.tagName) && !c.hasAttribute("inert")) { c.setAttribute("inert", ""); held.push(c); } });
+  document.body.appendChild(g);
   var f = g.querySelector("form"), err = g.querySelector(".mpdc-age-err"), first = f.querySelector("select");
+  if (NO) { f.innerHTML = REFUSED; return; }
   setTimeout(function () { first.focus(); }, 0);
   f.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -29,9 +35,11 @@
     if (!y || !m || !d) { err.textContent = "Choose your month, day and year."; return; }
     var b = new Date(y, m - 1, d); if (b.getMonth() !== m - 1) { err.textContent = "That date does not exist."; return; }
     var age = yr - y - ((now.getMonth() < m - 1 || (now.getMonth() === m - 1 && now.getDate() < d)) ? 1 : 0);
-    if (age < 21) { f.innerHTML = '<b class="mpdc-age-mark">More Parties DC</b><h2 id="mpdc-age-h">Sorry, you must be 21 or older.</h2><p>Our events are 21+.</p>'; return; }
+    if (age < 21) { try { sessionStorage.setItem("mpdc21no", "1"); } catch (x) {} f.innerHTML = REFUSED; var rh = f.querySelector("h2"); if (rh) rh.focus(); return; }
     try { localStorage.setItem(KEY, JSON.stringify({ ok: 1, at: Date.now() })); } catch (x) {}
+    held.forEach(function (c) { c.removeAttribute("inert"); });
     html.classList.remove("mpdc-lock"); g.remove();
+    try { document.dispatchEvent(new Event("mpdc:age-ok")); } catch (x) {}
   });
   /* keep focus inside the gate */
   g.addEventListener("keydown", function (e) {
@@ -273,6 +281,8 @@
       document.querySelectorAll('script[type="application/ld+json"]').forEach(function (sc) {
         if (sc.id !== "mpdc-events-ld" && /443-?673-?9234/.test(sc.textContent)) sc.textContent = sc.textContent.replace(/\+?1?-?443-673-9234/g, "+1-771-213-6543");
       });
+      /* the guest-appearances link in the template still points at a page that no longer exists */
+      document.querySelectorAll('a[href$="/celebritypics"],a[href$="/celebritypics/"]').forEach(function (a) { a.setAttribute("href", "/sax-celebs"); });
     } catch (e) {}
   })();
 
@@ -326,6 +336,11 @@
       });
       var sc = document.createElement("script"); sc.type = "application/ld+json"; sc.id = "mpdc-events-ld"; sc.text = JSON.stringify(out);
       document.head.appendChild(sc);
+      /* the template header still writes its own Event list using the visitor's clock (a crawler in UTC reads 10pm doors
+         as 5pm). One correct list only: drop the old one. Belongs in the Squarespace editor; this holds until then. */
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(function (o) {
+        if (o.id !== "mpdc-events-ld" && /"@type":\s*"Event"/.test(o.textContent) && /"startDate":\s*"[^"]+Z"/.test(o.textContent)) o.remove();
+      });
     } catch (e) {}
   })();
 
@@ -408,12 +423,21 @@
     var hsrc = MOBILE ? M + "hero-mobile.mp4" : M + "hero-desktop.mp4";
     var hposter = MOBILE ? M + "hero-mobile.webp" : M + "hero-desktop.webp";
     var hm = document.createElement("div"); hm.className = "mpdc-hero-media";
-    hm.innerHTML = (RM || SAVE_DATA)
-      ? '<img src="' + hposter + '" alt="Rosebar Fridays crowd" fetchpriority="high">'
-      : '<video autoplay muted loop playsinline preload="auto" poster="' + hposter + '" aria-hidden="true"><source src="' + hsrc + '" type="video/mp4"></video>';
+    var SLOW = (function () { var c = navigator.connection; return !!(c && /(^|-)[23]g$/.test(c.effectiveType || "")); })();
+    hm.innerHTML = '<img src="' + hposter + '" alt="Rosebar Fridays crowd" fetchpriority="high">';
     bg.querySelectorAll("video").forEach(function (v) { if (!v.closest(".mpdc-hero-media")) { try { v.pause(); v.removeAttribute("src"); v.querySelectorAll("source").forEach(function (s) { s.remove(); }); v.load(); } catch (e) {} } });
     bg.appendChild(hm); hero.classList.add("mpdc-hero-host");
-    var hv = hm.querySelector("video"); if (hv) { var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {}); }
+    if (!(RM || SAVE_DATA || SLOW)) {
+      var startVideo = function () {
+        if (hm.querySelector("video")) return;
+        var hv = document.createElement("video"); hv.muted = true; hv.loop = true; hv.playsInline = true;
+        hv.setAttribute("muted", ""); hv.setAttribute("playsinline", ""); hv.setAttribute("aria-hidden", "true"); hv.preload = "auto"; hv.src = hsrc;
+        hv.addEventListener("playing", function () { hm.classList.add("is-playing"); }, { once: true });
+        hm.appendChild(hv); var pp = hv.play(); if (pp && pp.catch) pp.catch(function () {});
+      };
+      var afterLoad = function () { if (document.readyState === "complete") setTimeout(startVideo, 0); else window.addEventListener("load", function () { setTimeout(startVideo, 0); }, { once: true }); };
+      if (document.getElementById("mpdc-age")) document.addEventListener("mpdc:age-ok", afterLoad, { once: true }); else afterLoad();
+    }
   }
 
   /* 2b) This-weekend strip: pinned to the bottom of the hero, counts down to doors */

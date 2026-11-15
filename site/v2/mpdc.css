@@ -36,6 +36,7 @@
 /* hero: our loop sits on top of the template background; content stays above it */
 .mpdc-hero-media{position:absolute;inset:0;z-index:1;overflow:hidden;background:#000}
 .mpdc-hero-media video,.mpdc-hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mpdc-hero-media video{opacity:0;transition:opacity .6s ease}.mpdc-hero-media.is-playing video{opacity:1}
 .mpdc-hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.15) 40%,rgba(0,0,0,.55) 100%)}
 .mpdc-hero-host .section-background>*:not(.mpdc-hero-media){visibility:hidden}
 /* night-card media */
@@ -295,7 +296,7 @@ body.mpdc-ready main :has(> section.page-section):before{display:none!important}
 .mpdc-age-err{min-height:20px;color:#ff8f8c!important;font-size:14px!important;margin:6px 0 10px!important}
 .mpdc-age-box button{width:100%;min-height:48px;cursor:pointer}
 .mpdc-age-fine{margin:16px 0 0!important;font-size:13px!important;color:#8a8a8a!important}
-.mpdc-age-fine a{color:#bdbdbd}
+.mpdc-age-fine a{color:#bdbdbd;text-decoration:underline}
 .mpdc-optin{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;color:#cfcfcf;font-size:13px;line-height:1.45;cursor:pointer}
 .mpdc-optin input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:#ff6f6c}
 .mpdc-optin a{color:#fff}
