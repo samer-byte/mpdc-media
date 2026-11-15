@@ -45,8 +45,8 @@
   document.body.classList.add("mpdc-ready");   /* releases the first-screen hold in mpdc.css (same task as the insert below: no paint in between) */
   var BASE = "https://samer-byte.github.io/mpdc-media/";
   var M = BASE + "v2/", CODE = BASE + "site/v2/";
-  var PHONE = "+12028127900", PHONE_TXT = "(202) 812-7900";
-  var LINE = "+17712136543", LINE_TXT = "(771) 213-6543";   /* table line: AI booking assistant. The site invites calls; texts start when the carriers approve. OJ 11/12 */
+  var PHONE = "+17712136543", PHONE_TXT = "(771) 213-6543";   /* texts and calls both go to the table line. Juice 11/14, after the carriers approved texting */
+  var LINE = "+17712136543", LINE_TXT = "(771) 213-6543";   /* table line: AI booking assistant, calls and texts */
   var GROUP = "https://posh.vip/g/more-parties-dc";
   var APP_WEB = "https://app.morepartiesdc.com", APP_STORE = "https://apps.apple.com/us/app/more-parties-dc/id6812600981";
   var mm = function (q) { return !!(window.matchMedia && matchMedia(q).matches); };
@@ -271,7 +271,7 @@
   (function hygiene() {
     try {
       document.querySelectorAll('script[type="application/ld+json"]').forEach(function (sc) {
-        if (sc.id !== "mpdc-events-ld" && /443-?673-?9234/.test(sc.textContent)) sc.textContent = sc.textContent.replace(/\+?1?-?443-673-9234/g, "+1-202-812-7900");
+        if (sc.id !== "mpdc-events-ld" && /443-?673-?9234/.test(sc.textContent)) sc.textContent = sc.textContent.replace(/\+?1?-?443-673-9234/g, "+1-771-213-6543");
       });
     } catch (e) {}
   })();
@@ -294,7 +294,7 @@
   document.querySelectorAll("footer *").forEach(function (n) {
     if (n.children.length === 0 && n.textContent.trim() === "Site Title" && !n.closest(".mpdc-footer-brand")) {
       var d = document.createElement("div"); d.className = "mpdc-footer-brand";
-      d.innerHTML = '<b>More Parties DC</b><span>For sections DM <a href="https://instagram.com/morepartiesdc">@morepartiesdc</a> · <a href="' + SMS + '">' + PHONE_TXT + '</a> · <a href="mailto:morepartiesdc@gmail.com">morepartiesdc@gmail.com</a></span><span>Book a table by phone, any hour: <a href="tel:' + LINE + '">' + LINE_TXT + '</a></span><span>Washington, DC · <a href="' + GROUP + '">Events &amp; tables on Posh</a> · <a href="/table-reservation">Floor maps</a> · <a href="/sax-celebs">Recent visits</a> · <a href="' + APP_WEB + '">The app</a> · <a href="https://app.morepartiesdc.com/privacy.html">Privacy</a> · <a href="https://app.morepartiesdc.com/terms.html">Terms</a></span><span>21+ only. Msg &amp; data rates may apply to texts; reply STOP to opt out.</span>';
+      d.innerHTML = '<b>More Parties DC</b><span>For sections DM <a href="https://instagram.com/morepartiesdc">@morepartiesdc</a> · <a href="' + SMS + '">' + PHONE_TXT + '</a> · <a href="mailto:morepartiesdc@gmail.com">morepartiesdc@gmail.com</a></span><span>Book a table by text or call, any hour: <a href="tel:' + LINE + '">' + LINE_TXT + '</a></span><span>Washington, DC · <a href="' + GROUP + '">Events &amp; tables on Posh</a> · <a href="/table-reservation">Floor maps</a> · <a href="/sax-celebs">Recent visits</a> · <a href="' + APP_WEB + '">The app</a> · <a href="https://app.morepartiesdc.com/privacy.html">Privacy</a> · <a href="https://app.morepartiesdc.com/terms.html">Terms</a></span><span>21+ only. Msg &amp; data rates may apply to texts; reply STOP to opt out.</span>';
       (n.closest("p,h1,h2,h3,div") || n).replaceWith(d);
     }
   });
@@ -521,7 +521,7 @@
     + '<div class="mpdc-cols"><div><h3>How it works</h3><p>Pick your night, pick your table on the floor map, and hold it with a deposit that is applied in full to your minimum. On holidays and hosted nights a section fee holds the table instead, and it does not count toward the minimum. You get a confirmation text with your table and arrival time.</p></div>'
     + '<div><h3>What it costs</h3><p>Tables start at ' + money(Math.min(from.fri || 500, from.sat || 500, from.sun || 500)) + ' on regular weekends; premium sections, holidays and hosted nights run higher. Every table is held with a $500 deposit on regular nights. Service fee and tax are added to the final bill: 30% at Rosebar, 32% at SAX.</p></div>'
     + '<div><h3>Arrive on time</h3><p>Tables not claimed by 12:30am can be released. Prices change on holidays and hosted nights. Your confirmation text has the final price.</p></div></div>'
-    + '<div class="mpdc-actions"><a class="mpdc-btn" href="/table-reservation">See the floor maps</a><a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text ' + PHONE_TXT + '</a><a class="mpdc-link" href="tel:' + LINE + '">Or call the table line, any hour: ' + LINE_TXT + '</a></div>'
+    + '<div class="mpdc-actions"><a class="mpdc-btn" href="/table-reservation">See the floor maps</a><a class="mpdc-btn mpdc-btn--ghost" href="' + SMS + '">Text ' + PHONE_TXT + '</a><a class="mpdc-link" href="tel:' + LINE + '">Or call the same number, any hour</a></div>'
     + '<p class="mpdc-fine">Deposits are non-refundable. All nights 21+. Fashionable attire — no slides or athletic wear.</p>'
     + '<div class="mpdc-app"><div><h3>The More Parties app</h3><p>Request a table, RSVP and keep your nights in one place. Same tables, same prices as this site.</p></div>'
     + '<div class="mpdc-actions"><a class="mpdc-btn mpdc-btn--ghost" href="' + APP_STORE + '">Get it for iPhone</a><a class="mpdc-link" href="' + APP_WEB + '">Open in your browser</a></div></div>'
