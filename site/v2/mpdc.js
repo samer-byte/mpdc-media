@@ -379,6 +379,19 @@
     document.getElementById("mpdc-live-slot").replaceWith(liveEl(n, nx));
     clearHeader(intro);
     mountFloor(document.querySelector("#floor .mpdc-floor-host"), { night: n.key, lock: true });
+    /* Rosebar bottle menu (Juice 11/15): Rosebar's own prices, from bottles.js (feed/build_bottles.cjs). No menu file, no section. */
+    if (n.key === "fri" || n.key === "sun") part("bottles.js", function (err) {
+      var B = window.MPDC_BOTTLES; if (err || !B || !B.cats || !B.cats.length || document.getElementById("bottles")) return;
+      var fl = document.getElementById("floor"); if (!fl) return;
+      fl.after(el('<section class="mpdc-info" id="bottles" aria-labelledby="mpdc-bottles-h"><div class="mpdc-wrap"><h2 id="mpdc-bottles-h">Bottle menu</h2>'
+        + '<p class="mpdc-sub">Rosebar prices per bottle. Tap a group to open it.</p><div class="mpdc-bt">'
+        + B.cats.map(function (c) {
+          var lo = Math.min.apply(null, c.items.map(function (i) { return i[1]; }));
+          return '<details class="mpdc-bt-cat"><summary><b>' + esc(c.name) + '</b><span>' + (c.items.length === 1 ? money(lo) : c.items.length + ' bottles · from ' + money(lo)) + '</span></summary><ul>'
+            + c.items.map(function (i) { return '<li><span>' + esc(i[0]) + '</span><b>' + money(i[1]) + '</b></li>'; }).join("") + '</ul></details>';
+        }).join("")
+        + '</div><p class="mpdc-fine">' + B.service + '% service fee and tax are added to every bottle. Rosebar sets these prices and can change them; the menu at your table is final.</p></div></section>'));
+    });
     /* hide the template's stale fact lines — the intro above carries the canonical terms (VENUE_TERMS 9/24) */
     (function fixEventbrite() { var w = document.createTreeWalker(document.querySelector("main"), NodeFilter.SHOW_TEXT), t; while ((t = w.nextNode())) if (/FOLLOW OUR EVENTBRITE/i.test(t.nodeValue)) t.nodeValue = t.nodeValue.replace(/FOLLOW OUR EVENTBRITE/i, "FOLLOW @MOREPARTIESDC"); })();
     var stale = [/^TABLE MINIMUMS\s*\$/i, /23%\s*GRATUITY/i, /^HOURS:/i, /TABLE CAN BE TAKEN/i];
