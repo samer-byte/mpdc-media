@@ -474,8 +474,9 @@
   var FH = FEED.fromHoliday || {};
   var cardCopy = {
     fri: { media: loop(M + "card-rosebar-fridays.mp4", M + "card-rosebar-fridays.webp", "Rosebar Fridays — bottles, sparklers and the crowd"), where: '<strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW', vibe: 'Hip-hop + Top 100 · fashionable attire' },
-    sat: { media: loop(M + "card-sax-saturdays.mp4", M + "card-sax-saturdays.webp", "SAX Saturdays fire performers"), where: '<strong>SAX</strong> · 734 11th St NW', vibe: 'Hip-hop + Top 100 · fashionable attire' },
-    sun: { media: loop(M + "card-rosebar-sundays.mp4", M + "card-rosebar-sundays.webp", "Rosebar Sundays — the Rosebar sign and bottle parade"), where: '<strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW', vibe: '#SundayService · Hip-hop + Top 100' }
+    /* v3 clips: the curse-word bottle signs cut out (2026-11-17) */
+    sat: { media: loop(BASE + "v3/card-sax-saturdays.mp4", M + "card-sax-saturdays.webp", "SAX Saturdays fire performers"), where: '<strong>SAX</strong> · 734 11th St NW', vibe: 'Hip-hop + Top 100 · fashionable attire' },
+    sun: { media: loop(BASE + "v3/card-rosebar-sundays.mp4", M + "card-rosebar-sundays.webp", "Rosebar Sundays — the Rosebar sign and bottle parade"), where: '<strong>Rosebar Lounge</strong> · 1215 Connecticut Ave NW', vibe: '#SundayService · Hip-hop + Top 100' }
   };
   /* every line on a card is about the date printed on it: doors, free entry and the lowest table follow that night */
   function cardLines(n, nx) {
