@@ -525,7 +525,7 @@
     return '<article class="mpdc-recap" id="recap-' + esc(r.id) + '"><div class="mpdc-recap-head"><span class="mpdc-day">' + esc(r.night) + ' · ' + esc(r.date) + '</span><h3>' + esc(r.title) + '</h3><p>' + esc(r.line) + '</p></div>'
       + '<div class="mpdc-recap-body">' + (r.clip ? '<figure class="mpdc-reel mpdc-recap-clip" data-src="' + dir + r.clip.file + '.mp4" data-poster="' + dir + r.clip.file + '.webp" data-label="' + esc(r.clip.label) + '" data-sub="' + esc(r.night + " · " + r.date) + '"><div class="mpdc-reel-frame"><img src="' + dir + r.clip.file + '.webp" alt="' + esc(r.clip.label) + '" loading="lazy" decoding="async"><button class="mpdc-play" type="button" aria-label="Play ' + esc(r.clip.label) + '"><span></span></button></div></figure>' : '')
       + '<div class="mpdc-recap-grid" data-lb>' + r.photos.map(function (ph) {
-          return '<a href="' + dir + ph[0] + '.webp" class="mpdc-recap-ph" data-full="' + dir + ph[0] + '.webp"><img src="' + dir + ph[0] + '-sm.webp" alt="' + esc(ph[1]) + '" loading="lazy" decoding="async" width="520" height="780"></a>';
+          return '<a href="' + dir + ph[0] + '.webp" class="mpdc-recap-ph" data-full="' + dir + ph[0] + '.webp"><img src="' + dir + ph[0] + '-sm.webp" srcset="' + dir + ph[0] + '-xs.webp 260w, ' + dir + ph[0] + '-sm.webp 520w" sizes="(max-width:640px) 30vw, 140px" alt="' + esc(ph[1]) + '" loading="lazy" decoding="async" width="520" height="780"></a>';
         }).join("") + '</div></div></article>';
   }).join("");
   /* "Last weekend" only when it is: otherwise the heading says what it is */
